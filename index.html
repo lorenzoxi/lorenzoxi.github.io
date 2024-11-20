@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<script>
+	async function fetchMessages() {
+		try {
+			const response = await fetch('http://164.92.252.183/get_messages');
+
+			const messages = await response.json(); // Parse JSON response
+
+			console.log('Fetched messages:', messages); // Debugging
+
+			const newsList = document.getElementById('newslist');
+
+			messages.forEach(msg => {
+				// const msgDate = msg.date;
+				// const msgLastUpdate = msg.edit_date;
+				if (msg) {
+					msg = JSON.parse(msg);
+					const text = msg.message;
+					const date = msg.date;
+					const edit_date = msg.edit_date;
+
+					const spanItem = document.createElement('span');
+					spanItem.classList.add('tag');
+					spanItem.classList.add('tag-date');
+					spanItem.textContent = date;
+
+					const listItem = document.createElement('li');
+					listItem.appendChild(spanItem);
+					listItem.innerHTML += " " + text;
+
+					newsList.appendChild(listItem);
+				}
+			});
+
+
+		} catch (error) {
+			console.error('Error fetching messages:', error);
+		}
+	}
+
+	fetchMessages();
+</script>
+
+
+<html lang="en">
+
+<head>
+	<title>Lorenzo Perinello</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="icon" type="image/x-icon" href="images/favicon-circle.ico">
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li><a href="#intro" class="active">Lorenzo.</a></li>
+				<li><a href="#news">News</a></li>
+				<li><a href="#shortcv">Short CV</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<main id="main">
+
+			<!-- Introduction -->
+			<section id="intro" class="main">
+				<div class="spotlight">
+					<div class="content">
+						<header class="major">
+							<h1>Lorenzo Perinello</h1>
+						</header>
+						<div class="shortbio">
+							<p>
+								<abbr title="Doctor of Philosophy">PhD</abbr> student in <a href="http://hit.psy.unipd.it"
+									rel="external">Brain, Mind and Computer Science</a> at the University of Padua.
+							</p>
+							<p>
+								Currently working on operations research related to urban mobility issues.
+							</p>
+						</div>
+						<ul class="shortbio-list">
+							<li class="email-icon">
+								E-mail: <a href="mailto:lorenzo.perinello@phd.studenti.it">
+									lorenzo.perinello@phd.studenti.it
+								</a>
+							</li>
+							<li class="book-icon">
+								Check my contributions on
+								<a href="https://scholar.google.com/citations?user=yXii66wAAAAJ&hl=it&oi=ao" rel="external">
+									Google Scholar
+								</a> and
+								<a href="https://www.scopus.com/authid/detail.uri?authorId=57893539300" rel="external">
+									Scopus
+								</a>
+							</li>
+							<li class="link-icon">
+								<a href="https://www.linkedin.com/in/lorenzo-perinello-4581a394/" rel="external">
+									LinkedIn
+								</a>
+								<span aria-hidden="true" class="shortbio-separator-hor"> | </span>
+								<a href="https://github.com/lorenzoxi" rel="external">
+									GitHub
+								</a>
+							</li>
+						</ul>
+					</div>
+					<span class="image"><img src="images/me2024.jpeg" alt="" /></span>
+				</div>
+			</section>
+
+			<section id="news" class="main" style="text-align: justify;">
+				<h2>Latest news</h2>
+
+				<ul id="newslist" class="news-list">
+				</ul>
+
+			</section>
+
+			<!-- First Section -->
+			<section id="shortcv" class="main" style="text-align: justify;">
+				<h2>Short CV</h2>
+
+				<ul>
+					<li>
+						I am a <b>Ph.D. candidate in Brain, Mind, and Computer Science</b> at the University of Padova, where my
+						research
+						focuses on developing optimization strategies for sustainable mobility systems and networks.
+					</li>
+					<li>I hold a <b>Master’s degree in Computer Science</b> with honors, as well as a Bachelor’s degree in
+						Computer
+						Science from the same university.
+					</li>
+					<li>
+						Over the years, I have gained experience in software and web development through various university projects
+						and research grants.
+					</li>
+				</ul>
+
+			</section>
+
+			<footer style="text-align:center;" class="footer">
+				<small>
+					Template by <a href="https://html5up.net">HTML5 UP</a>
+				</small>
+			</footer>
+
+		</main>
+
+	</div>
+
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
