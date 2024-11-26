@@ -4,48 +4,58 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
+
+
 <script>
-	async function fetchMessages() {
+	// Function to fetch JSON data, parse it, and render as an unordered list
+	async function fetchAndDisplayJSON() {
+		const url = 'https://perinello-me-api-3a4efa5a540b.herokuapp.com/news';
+
 		try {
-			const response = await fetch('http://164.92.252.183/get_messages');
+			// Fetch the JSON data
+			const response = await fetch(url);
 
-			const messages = await response.json(); // Parse JSON response
+			// Ensure the fetch was successful
+			if (!response.ok) {
+				throw new Error(`HTTP error! Status: ${response.status}`);
+			}
 
-			console.log('Fetched messages:', messages); // Debugging
+			// Parse the response as JSON
+			const data = await response.json();
+
+			console.log(data);
 
 			const newsList = document.getElementById('newslist');
 
-			messages.forEach(msg => {
-				// const msgDate = msg.date;
-				// const msgLastUpdate = msg.edit_date;
-				if (msg) {
-					msg = JSON.parse(msg);
-					const text = msg.message;
-					const date = msg.date;
-					const edit_date = msg.edit_date;
+			data.forEach(item => {
+				const listItem = document.createElement('li');
+				const date = item.date;
+				const text = item.text;
 
-					const spanItem = document.createElement('span');
-					spanItem.classList.add('tag');
-					spanItem.classList.add('tag-date');
-					spanItem.textContent = date;
+				const dateSpan = document.createElement('span');
+				dateSpan.textContent = date;
+				dateSpan.classList.add('tag-date');
 
-					const listItem = document.createElement('li');
-					listItem.appendChild(spanItem);
-					listItem.innerHTML += " " + text;
+				const textSpan = document.createElement('span');
+				textSpan.textContent = " " + text;
 
-					newsList.appendChild(listItem);
-				}
+				listItem.appendChild(dateSpan);
+				listItem.appendChild(textSpan);
+
+				newsList.appendChild(listItem);
 			});
 
-
+			
+			document.body.appendChild(listContainer);
 		} catch (error) {
-			console.error('Error fetching messages:', error);
+			console.error('Error fetching or processing JSON:', error);
 		}
 	}
 
-	fetchMessages();
-</script>
+	// Initialize the function
+	fetchAndDisplayJSON();
 
+</script>
 
 <html lang="en">
 
@@ -69,7 +79,7 @@
 		<nav id="nav">
 			<ul>
 				<li><a href="#intro" class="active">Lorenzo.</a></li>
-				<li><a href="#news">News</a></li>
+				<li><a href="#latest">Latest</a></li>
 				<li><a href="#shortcv">Short CV</a></li>
 			</ul>
 		</nav>
@@ -123,7 +133,7 @@
 				</div>
 			</section>
 
-			<section id="news" class="main" style="text-align: justify;">
+			<section id="latest" class="main" style="text-align: justify;">
 				<h2>Latest news</h2>
 
 				<ul id="newslist" class="news-list">
